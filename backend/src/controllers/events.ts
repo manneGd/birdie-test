@@ -1,4 +1,5 @@
 import * as express from "express";
+import {Response} from "express";
 import * as mysql from "mysql";
 import {database} from "./databaseConnexion";
 
@@ -15,10 +16,9 @@ eventsController.get('/', (_, res) => {
     });
 });
 
-eventsController.get('/time/:id', (req, res) => {
-    const timestamp = req.params.id;
-    const queryString = 'SELECT * FROM events WHERE timestamp = ? LIMIT 5';
-    const queryFormat = mysql.format(queryString, [timestamp]);
+function queryHandler(columnName: string, param: any, res: Response) {
+    const queryString = 'SELECT * FROM events WHERE '+ columnName +' = ? LIMIT 5';
+    const queryFormat = mysql.format(queryString, [param]);
     database.query(queryFormat, (err, rows) => {
         if (err) {
             res.status(200).json({'status': 'Error in the query', 'err': err});
@@ -27,46 +27,24 @@ eventsController.get('/time/:id', (req, res) => {
             res.status(200).json(rows);
         }
     });
+}
+
+eventsController.get('/time/:id', (req, res) => {
+    const timestamp = req.params.id;
+    queryHandler('timestamp', timestamp, res);
 });
 
 eventsController.get('/type/:id', (req, res) => {
     const type = req.params.id;
-    const queryString = 'SELECT * FROM events WHERE event_type = ? LIMIT 5';
-    const queryFormat = mysql.format(queryString, [type]);
-    database.query(queryFormat, (err, rows) => {
-       if (err) {
-           res.status(200).json({'status': 'Error in the query', 'err': err});
-       }
-       else {
-           res.status(200).json(rows);
-       }
-    });
+    queryHandler('event_type', type, res);
 });
 
 eventsController.get('/caregiver/:id', (req, res) => {
     const caregiver = req.params.id;
-    const queryString = 'SELECT * FROM events WHERE caregiver_id = ? LIMIT 5';
-    const queryFormat = mysql.format(queryString, [caregiver]);
-    database.query(queryFormat, (err, rows) => {
-        if (err) {
-            res.status(200).json({'status': 'Error in the query', 'err': err});
-        }
-        else {
-            res.status(200).json(rows);
-        }
-    });
+    queryHandler('caregiver_id', caregiver, res);
 });
 
 eventsController.get('/mood/:id', (req, res) => {
     const mood = req.params.id;
-    const queryString = 'SELECT * FROM events WHERE mood = ? LIMIT 5';
-    const queryFormat = mysql.format(queryString, [mood]);
-    database.query(queryFormat, (err, rows) => {
-        if (err) {
-            res.status(200).json({'status': 'Error in the query', 'err': err});
-        }
-        else {
-            res.status(200).json(rows);
-        }
-    });
+    queryHandler('mood', mood, res);
 });
