@@ -13,6 +13,6 @@ database.connect((err: Error) => {
         console.log("Error connecting database ... nn");
     }
 });
-app.use(eventsController);
+app.use('/events', eventsController);
 
 export default app;
