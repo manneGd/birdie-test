@@ -8,7 +8,7 @@ const StyledLoader = styled.svg`
   height: 50px;
   
   & .path {
-    stroke: #5652BF;
+    stroke: #5ac5c1;
     stroke-linecap: round;
     animation: dash 1.5s ease-in-out infinite;
   }

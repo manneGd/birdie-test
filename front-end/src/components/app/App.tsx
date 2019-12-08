@@ -7,7 +7,8 @@ import Logo from '@App/components/Logo';
 import { REQUEST_EVENTS } from '@App/store/actions/constants';
 import { Dispatch } from 'redux';
 import { Loader } from '@App/components/Loader';
-import { EventsList } from '@App/components/EventsList';
+import { EventsList } from '@App/components/app/listView/EventsList';
+import { EventsTimeline } from '@App/components/app/timelineView/EventsTimeline';
 
 const LogoUrl = require('../../assets/images/logo-birdie.svg');
 
@@ -18,6 +19,7 @@ interface AppProps {
 }
 
 interface AppState {
+  toggle: boolean;
 }
 
 const GlobalStyle = createGlobalStyle`
@@ -41,13 +43,21 @@ const TopBarContainer = styled.div`
 class App extends React.Component<AppProps, AppState> {
   public constructor(props: AppProps) {
     super(props);
+    this.state = {
+      toggle: false,
+    };
+    this.toggleView = this.toggleView.bind(this);
   }
 
   componentDidMount(): void {
       this.props.requestEvents();
   }
 
-    public render() {
+  toggleView() {
+    this.setState({toggle: !this.state.toggle});
+  }
+
+  public render() {
     const { loading, events } = this.props;
     return (
       <>
@@ -56,10 +66,14 @@ class App extends React.Component<AppProps, AppState> {
           <Logo src={LogoUrl} />
           <Title>Overview patient</Title>
         </TopBarContainer>
+        <button onClick={this.toggleView}>Toggle</button>
           { loading ?
               <Loader />
               :
-              <EventsList events={events} />
+              this.state.toggle ?
+                  <EventsTimeline events={events}/>
+                 :
+                  <EventsList events={events} />
           }
       </>
     );

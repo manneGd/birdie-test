@@ -1,4 +1,10 @@
-import { ERROR_EVENTS, RECEIVE_EVENTS, REQUEST_EVENTS } from '@App/store/actions/constants';
+import {
+    ERROR_EVENTS,
+    NEXT_EVENTS,
+    PREVIOUS_EVENTS,
+    RECEIVE_EVENTS,
+    REQUEST_EVENTS
+} from '@App/store/actions/constants';
 import { EventData } from '@App/store/reducers';
 
 interface ActionRequest {
@@ -7,7 +13,10 @@ interface ActionRequest {
 
 interface ActionReceive {
     type: typeof RECEIVE_EVENTS;
-    payload: EventData[];
+    payload: {
+        events: EventData[],
+        page: number,
+    };
 }
 
 interface ActionError {
@@ -15,4 +24,12 @@ interface ActionError {
     error_message: string;
 }
 
-export type FetchActionType = ActionRequest | ActionReceive | ActionError;
+interface ActionPrevious {
+    type: typeof PREVIOUS_EVENTS;
+}
+
+interface ActionNext {
+    type: typeof NEXT_EVENTS;
+}
+
+export type FetchActionType = ActionRequest | ActionReceive | ActionError | ActionNext | ActionPrevious;

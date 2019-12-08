@@ -5,8 +5,11 @@ import {database} from "./databaseConnexion";
 
 export const eventsController = express.Router();
 
-eventsController.get('/', (_, res) => {
-    database.query('SELECT * FROM events', (err, rows) => {
+eventsController.get('/', (req, res) => {
+
+    const offset = req.query.page * 25;
+    database.query('SELECT * FROM events ORDER BY timestamp DESC LIMIT ' + offset +',25',
+        (err, rows) => {
         if (!err) {
             res.status(200).json(rows);
         }

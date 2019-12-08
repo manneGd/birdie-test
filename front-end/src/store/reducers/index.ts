@@ -8,6 +8,7 @@ export type RootState = Readonly<{
 export interface Data {
     readonly error_message?: string;
     readonly loading: boolean;
+    readonly page: number;
     readonly events?: EventData[];
 }
 

@@ -6,9 +6,11 @@ type EventProps = {
   event: EventData,
 };
 
-const Body = styled.tr`
+const Body = styled.tbody`
     font-size: 12px;
     text-align: center;
+    color: #02264c;
+    font-family: Circular-Std,sans-serif;
 `;
 
 const Row = styled.td`
@@ -26,12 +28,15 @@ export const Payload = ({event}: EventProps) => {
     } = JSON.parse(event.payload);
     return (
         <Body key={event.id}>
-            <Row>{new Date(timestamp).toDateString()}</Row>
-            <Row>{event_type}</Row>
-            <Row>{fluid}</Row>
-            <Row>{consumed_volume_ml}</Row>
-            <Row>{task_schedule_note}</Row>
-            <Row>{task_definition_description}</Row>
+            <tr>
+                <Row>{new Date(timestamp).toDateString()}</Row>
+                <Row>{new Date(timestamp).toLocaleTimeString('en-UK')}</Row>
+                <Row>{event_type}</Row>
+                <Row>{fluid}</Row>
+                <Row>{consumed_volume_ml}</Row>
+                <Row>{task_schedule_note}</Row>
+                <Row>{task_definition_description}</Row>
+            </tr>
         </Body>
     );
 };
