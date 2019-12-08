@@ -1,21 +1,23 @@
 import * as React from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
-import { RootState } from '@App/store/reducers';
+import { EventData, RootState } from '@App/store/reducers';
 import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
-
 import Title from '@App/components/Title';
 import Logo from '@App/components/Logo';
-import SubTitle from '@App/components/SubTitle';
+import { REQUEST_EVENTS } from '@App/store/actions/constants';
+import { Dispatch } from 'redux';
+import { Loader } from '@App/components/Loader';
+import { EventsList } from '@App/components/EventsList';
 
 const LogoUrl = require('../../assets/images/logo-birdie.svg');
 
 interface AppProps {
-
+  loading: boolean;
+  events: EventData[];
+  requestEvents: () => void;
 }
 
 interface AppState {
-
 }
 
 const GlobalStyle = createGlobalStyle`
@@ -28,13 +30,12 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-const AppContainer = styled.div`
+const TopBarContainer = styled.div`
   width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
+  display: inline-flex;
+  justify-content: top;
+  align-items: left;
+  flex-direction: row;
 `;
 
 class App extends React.Component<AppProps, AppState> {
@@ -42,22 +43,36 @@ class App extends React.Component<AppProps, AppState> {
     super(props);
   }
 
-  public render() {
+  componentDidMount(): void {
+      this.props.requestEvents();
+  }
+
+    public render() {
+    const { loading, events } = this.props;
     return (
       <>
         <GlobalStyle />
-        <AppContainer>
+        <TopBarContainer>
           <Logo src={LogoUrl} />
-          <Title>Welcome to the birdie test</Title>
-          <SubTitle>Best of luck!</SubTitle>
-        </AppContainer>
+          <Title>Overview patient</Title>
+        </TopBarContainer>
+          { loading ?
+              <Loader />
+              :
+              <EventsList events={events} />
+          }
       </>
     );
-  }
+    }
 }
 
-const mapStateToProps = (state: RootState, ownProps: object) => {};
+const mapStateToProps = (state: RootState, ownProps: object) => ({
+  loading: state.data.loading,
+  events: state.data.events,
+});
 
-const mapDispatchToProps = (dispatch: Dispatch<RootState>) => {};
+const mapDispatchToProps = (dispatch: Dispatch<RootState>) => ({
+  requestEvents: () => dispatch({type: REQUEST_EVENTS}),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

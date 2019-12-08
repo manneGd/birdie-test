@@ -6,7 +6,7 @@ import {database} from "./databaseConnexion";
 export const eventsController = express.Router();
 
 eventsController.get('/', (_, res) => {
-    database.query('SELECT * FROM events LIMIT 5', (err, rows) => {
+    database.query('SELECT * FROM events', (err, rows) => {
         if (!err) {
             res.status(200).json(rows);
         }
