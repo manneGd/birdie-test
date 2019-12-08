@@ -28,11 +28,6 @@ const Th = styled.th`
     padding: 4px 6px;
   `;
 
-const Footer = styled.tfoot`
-    display: inline-flex;
-    align-items: right;
-`;
-
 export const EventsList = ({events}: EventsListProps) => {
     return (
             <Table>
@@ -50,9 +45,7 @@ export const EventsList = ({events}: EventsListProps) => {
                 {events.map(e =>
                     <Payload key={e.id} event={e} />
                 )}
-                <Footer>
-                    <Pagination />
-                </Footer>
+                <Pagination />
             </Table>
     );
 };

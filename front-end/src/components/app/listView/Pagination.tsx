@@ -21,16 +21,21 @@ const Button = styled.button`
     height: 100%;
 `;
 
+const Footer = styled.tfoot`
+    display: inline-flex;
+    align-items: right;
+`;
+
 class Pagination extends React.Component<PaginationProps> {
     constructor(props: PaginationProps) {
         super(props);
     }
     render() {
         return (
-            <div>
+            <Footer>
                 <Button onClick={() => this.props.previousEvents}>Previous</Button>
                 <Button onClick={() => this.props.nextEvents}>Next</Button>
-            </div>
+            </Footer>
         );
     }
 }
