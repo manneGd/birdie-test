@@ -7,7 +7,8 @@ export const eventsController = express.Router();
 
 eventsController.get('/', (req, res) => {
 
-    const offset = req.query.page * 25;
+    const page = req.query.page ? req.query.page : 0;
+    const offset = page * 25;
     database.query('SELECT * FROM events ORDER BY timestamp DESC LIMIT ' + offset +',25',
         (err, rows) => {
         if (!err) {

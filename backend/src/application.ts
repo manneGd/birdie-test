@@ -12,11 +12,8 @@ app.use((_, res, next) => {
 app.use(pingController);
 database.connect((err: Error) => {
     if(!err) {
-        console.log("Database is connected ... nn");
-    } else {
-        console.log("Error connecting database ... nn");
+        app.use('/api/events', eventsController);
     }
 });
-app.use('/events', eventsController);
 
 export default app;
