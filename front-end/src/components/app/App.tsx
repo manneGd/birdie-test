@@ -40,6 +40,14 @@ const TopBarContainer = styled.div`
   flex-direction: row;
 `;
 
+const Button = styled.button`
+  padding: 10px;
+  background-color: #02264c;
+  border-radius: 25px;
+  color: #FFF;
+  display: right;
+`;
+
 class App extends React.Component<AppProps, AppState> {
   public constructor(props: AppProps) {
     super(props);
@@ -66,7 +74,7 @@ class App extends React.Component<AppProps, AppState> {
           <Logo src={LogoUrl} />
           <Title>Overview patient</Title>
         </TopBarContainer>
-        <button onClick={this.toggleView}>Toggle</button>
+        <Button onClick={this.toggleView}>Switch View mode</Button>
           { loading ?
               <Loader />
               :
