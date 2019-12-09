@@ -29,7 +29,7 @@ function*  getPrevEvents() {
 function* getNextEvents() {
     page = page ===  0 ? 0 : page + 1;
     try {
-        const responseJson: EventData[] = yield fetch(`http://localhost:8000/events?page=` + page)
+        const responseJson: EventData[] = yield fetch(`http://localhost:8000/api/events?page=` + page)
             .then(response => response.json());
 
         yield put(receiveEvents(responseJson, page));
