@@ -1,6 +1,6 @@
 import * as express from "express";
 import "reflect-metadata";
-import {database} from "./controllers/databaseConnexion";
+import {database} from "./controllers/databaseConnection";
 import {eventsController} from "./controllers/events";
 
 const app = express();
@@ -13,5 +13,6 @@ database.connect((err: Error) => {
         app.use('/api/events', eventsController);
     }
 });
+app.use('/api/events', eventsController);
 
 export default app;

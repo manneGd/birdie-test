@@ -1,7 +1,7 @@
 import * as express from "express";
 import {Response} from "express";
 import * as mysql from "mysql";
-import {database} from "./databaseConnexion";
+import {database} from "./databaseConnection";
 
 export const eventsController = express.Router();
 
@@ -15,7 +15,7 @@ eventsController.get('/', (req, res) => {
             res.status(200).json(rows);
         }
         else {
-            res.status(200).json({'status': 'Error in the query', 'err': err});
+            res.status(400).json({'status': 'Error in the query', 'err': err});
         }
     });
 });
@@ -25,7 +25,7 @@ function queryHandler(columnName: string, param: any, res: Response) {
     const queryFormat = mysql.format(queryString, [param]);
     database.query(queryFormat, (err, rows) => {
         if (err) {
-            res.status(200).json({'status': 'Error in the query', 'err': err});
+            res.status(400).json({'status': 'Error in the query', 'err': err});
         }
         else {
             res.status(200).json(rows);

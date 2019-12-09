@@ -2,7 +2,6 @@ import * as React from 'react';
 import { EventData } from '@App/store/reducers';
 import styled from 'styled-components';
 import { Payload } from '@App/components/listView/Event';
-import Pagination from '@App/components/listView/Pagination';
 
 type EventsListProps = {
     events: EventData[],
@@ -46,7 +45,6 @@ export const EventsList = ({events}: EventsListProps) => {
                     <Payload key={e.id} event={e} />
                 )}
             </Table>
-            <Pagination />
         </div>
     );
 };
