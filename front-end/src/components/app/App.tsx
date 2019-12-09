@@ -4,17 +4,17 @@ import { EventData, RootState } from '@App/store/reducers';
 import { connect } from 'react-redux';
 import Title from '@App/components/Title';
 import Logo from '@App/components/Logo';
-import { REQUEST_EVENTS } from '@App/store/actions/constants';
 import { Dispatch } from 'redux';
 import { Loader } from '@App/components/Loader';
-import { EventsList } from '@App/components/app/listView/EventsList';
-import { EventsTimeline } from '@App/components/app/timelineView/EventsTimeline';
+import { EventsList } from '@App/components/listView/EventsList';
+import { EventsTimeline } from '@App/components/timelineView/EventsTimeline';
+import { requestEvents } from '@App/store/actions';
 
 const LogoUrl = require('../../assets/images/logo-birdie.svg');
 
 interface AppProps {
-  loading: boolean;
   events: EventData[];
+  loading: boolean;
   requestEvents: () => void;
 }
 
@@ -33,19 +33,20 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const TopBarContainer = styled.div`
-  width: 100%;
-  display: inline-flex;
-  justify-content: top;
   align-items: left;
+  display: inline-flex;
   flex-direction: row;
+  justify-content: top;
+  width: 100%;
 `;
 
 const Button = styled.button`
-  padding: 10px;
   background-color: #02264c;
   border-radius: 25px;
   color: #FFF;
-  display: right;
+  float: right;
+  margin: 10px;
+  padding: 10px;
 `;
 
 class App extends React.Component<AppProps, AppState> {
@@ -94,7 +95,7 @@ const mapStateToProps = (state: RootState, ownProps: object) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<RootState>) => ({
-  requestEvents: () => dispatch({type: REQUEST_EVENTS}),
+  requestEvents: () => dispatch(requestEvents()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

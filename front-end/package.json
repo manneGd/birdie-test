@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "cross-fetch": "latest",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-event-timeline": "^1.6.3",

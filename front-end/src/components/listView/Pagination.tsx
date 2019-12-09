@@ -3,37 +3,43 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { RootState } from '@App/store/reducers';
 import { Dispatch } from 'redux';
-import { NEXT_EVENTS, PREVIOUS_EVENTS } from '@App/store/actions/constants';
+import { nextEvents, previousEvents } from '@App/store/actions';
 
 type PaginationProps = {
-  previousEvents: () => void;
-  nextEvents: () => void;
+    nextEvents: () => void;
+    previousEvents: () => void;
+};
+
+type PaginationState = {
+    nextEvents: () => void;
+    previousEvents: () => void;
 };
 
 const Button = styled.button`
+    border: 2px solid #D8D8D8;
+    color: #02264c;
     cursor: pointer;
     float: left;
-    transition: background-color .3s;
-    color: #02264c;
-    border: 2px solid #D8D8D8;
     font-weight: bold;
-    width: 100%;
     height: 100%;
+    transition: background-color .3s;
+    width: 100%;
 `;
 
-const Footer = styled.tfoot`
-    display: inline-flex;
+const Footer = styled.div`
     align-items: right;
+    display: inline-flex;
+    width: 50%;
 `;
 
-class Pagination extends React.Component<PaginationProps> {
+class Pagination extends React.Component<PaginationProps, PaginationState> {
     constructor(props: PaginationProps) {
         super(props);
     }
     render() {
         return (
             <Footer>
-                <Button onClick={() => this.props.previousEvents}>Previous</Button>
+                <Button onClick={() => this.state.previousEvents}>Previous</Button>
                 <Button onClick={() => this.props.nextEvents}>Next</Button>
             </Footer>
         );
@@ -41,8 +47,8 @@ class Pagination extends React.Component<PaginationProps> {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch<RootState>) => ({
-    previousEvents: () => dispatch({type: PREVIOUS_EVENTS}),
-    nextEvents: () => dispatch({type: NEXT_EVENTS}),
+    previousEvents: () => dispatch(previousEvents()),
+    nextEvents: () => dispatch(nextEvents()),
 });
 
 export default connect(mapDispatchToProps)(Pagination);

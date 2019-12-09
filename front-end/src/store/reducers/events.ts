@@ -16,7 +16,7 @@ export function eventsData(state: Data = initialState, action: FetchActionType):
         case NEXT_EVENTS:
             return { ...state, loading: true };
         case RECEIVE_EVENTS:
-            return { loading: false, page: action.payload.page, events: [...action.payload.events]};
+            return { loading: false, page: action.payload.page, events: action.payload.events};
         case ERROR_EVENTS:
             return { loading: false, page: 0, error_message: action.error_message};
 

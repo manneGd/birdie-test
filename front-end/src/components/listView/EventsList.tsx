@@ -1,25 +1,25 @@
 import * as React from 'react';
 import { EventData } from '@App/store/reducers';
 import styled from 'styled-components';
-import { Payload } from '@App/components/app/listView/Event';
-import Pagination from '@App/components/app/listView/Pagination';
+import { Payload } from '@App/components/listView/Event';
+import Pagination from '@App/components/listView/Pagination';
 
 type EventsListProps = {
     events: EventData[],
 };
 
 const Table = styled.table`
-    padding: 10px;
-    width: 100%;
-    text-align: center;
     border-collapse: collapse;
+    padding: 10px;
+    text-align: center;
+    width: 100%;
 `;
 
 const Header = styled.thead`
-    text-align: center;
-    font-weight: bold;
-    font-size: 16px;
     font-family: Circular-Std,sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
 `;
 
 const Th = styled.th`
@@ -30,6 +30,7 @@ const Th = styled.th`
 
 export const EventsList = ({events}: EventsListProps) => {
     return (
+        <div>
             <Table>
                 <Header>
                     <tr>
@@ -39,13 +40,13 @@ export const EventsList = ({events}: EventsListProps) => {
                         <Th>Fluid</Th>
                         <Th>Volume</Th>
                         <Th>Note</Th>
-                        <Th>Description</Th>
                     </tr>
                 </Header>
                 {events.map(e =>
                     <Payload key={e.id} event={e} />
                 )}
-                <Pagination />
             </Table>
+            <Pagination />
+        </div>
     );
 };

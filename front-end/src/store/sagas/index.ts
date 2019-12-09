@@ -2,7 +2,7 @@ import { all, put, takeLatest } from 'redux-saga/effects';
 import { errorEvents, nextEvents, previousEvents, receiveEvents, requestEvents } from '../actions';
 import { EventData } from '@App/store/reducers';
 
-let page = 1;
+let page = 0;
 
 function* getEvents() {
     try {
