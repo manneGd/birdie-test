@@ -14,8 +14,7 @@
     "lint": "tslint --force --format verbose \"src/**/*.ts\"",
     "test": "jest",
     "test:watch": "jest --watch",
-    "dev": "nodemon",
-    "heroku-postbuild": "cd frontend && npm install && npm install --only=dev --no-shrinkwrap && npm run build"
+    "dev": "nodemon"
   },
   "dependencies": {
     "@types/mysql": "^2.15.8",
