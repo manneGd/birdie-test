@@ -56,8 +56,8 @@ describe('Check query parameters', () => {
     });
 });
 
-describe('Check others routes', () => {
-   it('Check time route', async () => {
+describe('Check others roots', () => {
+   it('Check time root', async () => {
        await request(app)
            .get('/api/events/time/2019-04-23T18:24:16.536Z')
            .expect(200);
@@ -68,7 +68,7 @@ describe('Check others routes', () => {
                expect(res.body.length).toEqual(0);
            });
    });
-   it('Check type route', async () => {
+   it('Check type root', async () => {
        await request(app)
            .get('/api/events/type/general_observation')
            .expect(200);
@@ -79,7 +79,7 @@ describe('Check others routes', () => {
                expect(res.body.length).toEqual(0);
            });
    });
-    it('Check caregiver route', async () => {
+    it('Check caregiver root', async () => {
         await request(app)
             .get('/api/events/caregiver/220d9432-b5ed-4c81-8709-434899d2cd1b')
             .expect(200);
@@ -90,7 +90,7 @@ describe('Check others routes', () => {
                 expect(res.body.length).toEqual(0);
             });
     });
-    it('Check mood route', async () => {
+    it('Check mood root', async () => {
         await request(app)
             .get('/api/events/mood/okay')
             .expect(400);

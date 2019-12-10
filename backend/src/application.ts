@@ -9,8 +9,8 @@ app.use((_, res, next) => {
     next();
 });
 database.connect((err: Error) => {
-    if(!err) {
-        app.use('/api/events', eventsController);
+    if(err) {
+        throw err;
     }
 });
 app.use('/api/events', eventsController);

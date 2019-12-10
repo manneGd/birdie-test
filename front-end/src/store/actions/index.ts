@@ -1,7 +1,5 @@
 import {
     ERROR_EVENTS,
-    NEXT_EVENTS,
-    PREVIOUS_EVENTS,
     RECEIVE_EVENTS,
     REQUEST_EVENTS
 } from '@App/store/actions/constants';
@@ -28,16 +26,5 @@ export function errorEvents(error: string): FetchActionType {
     return {
         type: ERROR_EVENTS,
         error_message: error,
-    };
-}
-
-export function previousEvents(): FetchActionType {
-    return {
-        type: PREVIOUS_EVENTS,
-    };
-}
-export function nextEvents(): FetchActionType {
-    return {
-        type: NEXT_EVENTS,
     };
 }

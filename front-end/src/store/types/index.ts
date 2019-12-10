@@ -1,7 +1,5 @@
 import {
     ERROR_EVENTS,
-    NEXT_EVENTS,
-    PREVIOUS_EVENTS,
     RECEIVE_EVENTS,
     REQUEST_EVENTS
 } from '@App/store/actions/constants';
@@ -24,12 +22,4 @@ interface ActionError {
     error_message: string;
 }
 
-interface ActionPrevious {
-    type: typeof PREVIOUS_EVENTS;
-}
-
-interface ActionNext {
-    type: typeof NEXT_EVENTS;
-}
-
-export type FetchActionType = ActionRequest | ActionReceive | ActionError | ActionNext | ActionPrevious;
+export type FetchActionType = ActionRequest | ActionReceive | ActionError;
