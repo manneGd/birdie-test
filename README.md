@@ -2,82 +2,38 @@
 
 ## Backend
 
+### Features
 
-
-##Frontend
-
-At Birdie, our app allows care givers to record observations of older adults receiving care, we name them **care recipients**.
-
-These could be anything from the recording of their mood (happy, sad, bored, confused) to what they drank today (1 pint of water).
-
-Each of these observations are recorded as events in our database. Here's an example of a mood observation recorded
-in this event format:
-
-``` json
-{  
-   "id":"decaa026-2ce5-49cb-aff9-92326b85a98c",
-   "event_type":"mood_observation",
-   "visit_id":"39b94aab-cc35-4874-807f-c23472aec663",
-   "timestamp":"2019-04-23T10:53:13+01:00",
-   "caregiver_id":"4786d616-259e-4d52-80f7-8cf7dc6d881a",
-   "care_recipient_id":"03f3306d-a4a3-4179-ab88-81af66df8b7c",
-   "mood":"okay",
-},
-```
-
-Here's a quick explanation of the base properties:
-
-- `id`: Uniquely identifies the observation.
-- `event_type`: Title we use to categorise our events.
-- `visit_id`: Observations are traditionally observed during a visit between the caregiver (carer) and care recipient. This ID identifies that visit.
-- `caregiver_id`: Identifies who the caregiver (carer) was that made this observation.
-- `care_recipient_id`: Identifies the care recipient this observation is for.
-
-On top of that, there can be **additional properties** based on the `event_type`:
-
-- `mood` describes the mood of the care recipient as reported by the caregiver
-
-The database (we should have sent you credentials) contains some of these observation events, within the `events` table.
-
-## Challenge
-
-*Display the information to a family member*
-
-#### Your challenge is to clone this repository and create a small web application to visualize these observations, so that looking at it is valuable to a family member of this care recipient.
-
-This could mean presenting it in the following forms:
-
- - A table
- - A graph
- - A timeline
-
- Or any other way/combination of those. We are test driven here at Birdie so please make sure you write tests to validate your work.
-
-## Deliverables
-
-- Put your code on Github and send us the link to the repository
-- Deploying the code to a platform like [Heroku](https://heroku.com) is a great plus.
-- **If you are unable to deploy your code please send a recording of the application working**
-
-## Set up
-
-Here's the technical stack this boilerplate was made with:
-
-### Front end
-* [React](https://reactjs.org/)
-* [Redux](https://redux.js.org/introduction/getting-started)
-* [TypeScript](https://www.typescriptlang.org/)
-* [Redux sagas](https://redux-saga.js.org/docs/introduction/BeginnerTutorial.html)
-* [Styled components](https://www.styled-components.com/)
-
-### Back end
-* [Express](https://expressjs.com/)
-* [MySQL](https://www.mysql.com/)
-* [TypeScript](https://www.typescriptlang.org/)
-
-## Usage
-
-1. Start the API. (Run the following commands within the `backend` folder)
+I stored all the credentials for the database on a file named apiConfig.ts` (which is not on the repository). In order
+to successfully connect the API to the database, you need to create at the root of the backend folder this file. The
+ inside of it should look like this:
+ ```
+ export enum dbConfig {
+     host = <HOST>,
+     port = <PORT>,
+     user = <USERNAME>,
+     password = <PASSWORD>,
+     database = <YOUR_DATABASE>
+ }
+ ``` 
+ 
+ Once the API is running, you can access the api with `localhost:8000/api/events`. From this root, you can see the 25 
+ most recent events.
+ This is a list of all the root available:
+    - `localhost:8000/api/events` : Give the 25 latest events
+    - `localhost:8000/api/events/time/:id` : Return a filtered list depending on the timestamp specified with :id
+    - `localhost:8000/api/events/type/:id` : Return a filtered list depending on the event_type specified with :id
+    - `localhost:8000/api/events/caregiver/:id` : Return a filtered list depending on the caregiver specified with :id
+    - `localhost:8000/api/events/mood/:id` : Return a filtered list depending on the mood specified with :id
+ example:
+    - "localhost:8000/api/events/type/general_observation"
+ 
+ The root '/api/events' can take a query parameter `page` which serve as pagination. 
+ For example: localhost:8000/api/events?page=2 will load the next 25 events. Page parameter only take a number, any
+  other value will result in an error.
+      
+### Usage
+1. Start the API.
 
    a. Install the dependencies
    ```
@@ -88,14 +44,46 @@ Here's the technical stack this boilerplate was made with:
    ```
    npm run dev
    ```
-2. Start the React app  (Run the following commands within the `front-end` folder)
+2. Test the API.
 
-    a. Install the dependencies
+   a. Run the test suite
    ```
-   npm install
+   npm run test
    ```
-   
-   b. Run the application (will start on port `3000`)
-   ```
-   npm start
-   ```
+
+##Frontend
+
+### Features
+
+The data can be visualised from 2 views: the list view or the timeline view. The different columns displayed are :
+    - date,
+    - time,
+    - event type,
+    - fluid type,
+    - volume of fluid,
+    - note given by care recipient
+    
+When the app starts, a call to the API will be done in order to retrieve the list of events. Since it takes time to 
+retrieve the data, I've added a loader. As for the timeline, since not all the events have recipient's note or other
+ information, I have created 2 kinds of TimelineEvent: one with a body and the other without.  
+
+### Usage
+Start the React app
+     
+1. Install the dependencies
+        ```
+        npm install
+        ```
+2. Run the application (will start on port `3000`)
+        ```
+        npm start
+        ```
+
+
+## Acknowledgments
+
+    * The loader is from: `https://gist.github.com/knowbody/578b35164b69e867ed4913423f6bed30`
+    * The timeline is generated from the package `react-event-timeline`
+
+## Authors
+grand_m
